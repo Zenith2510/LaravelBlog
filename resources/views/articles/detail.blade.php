@@ -14,14 +14,16 @@
                 </div>
                 <div class="mt-2">
 
-                    <a href="{{ url("/articles/delete/$article->id") }}"
+                    @auth
+                        <a href="{{ url("/articles/delete/$article->id") }}"
                         class="btn btn-danger btn-sm">
                         Delete
                     </a>
+                    @endauth
                 </div>
             </div>
         </div>
-        <ul class="list-group">
+        <ul class="list-group mt-3">
             <li class="list-group-item active">
                 <b>Comments ({{count($article->comments)}})</b>
             </li>
