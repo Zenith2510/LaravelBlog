@@ -16,7 +16,11 @@
                 <div class="card-body">
                     <h3 class="h4 card-title">{{ $article->title }}</h3>
                     <div style="font-size: 0.8em" class="text-muted">
-                        {{ $article->created_at->diffForHumans() }}
+                        <b class="text-success"> {{$article->user->name}} </b>
+                        Category: <b>{{ $article->category->name }}</b>
+                        {{ $article->created_at->diffForHumans() }}<br>
+                        <b>Comments ({{count($article->comments)}})</b>
+
                     </div>
                     <div>
                         {{ $article->body }}

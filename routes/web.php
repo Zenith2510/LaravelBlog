@@ -13,6 +13,8 @@ Route::get('/', [ArticleController::class, 'index']);
 Route::get('/articles/add', [ArticleController::class, 'add']);
 Route::post('/articles/add', [ArticleController::class, 'create']);
 Route::get('/articles/delete/{id}', [ArticleController::class, 'delete']);
+Route::get('/articles/update/{id}', [ArticleController::class, 'edit']);
+Route::post('articles/update/{id}', [ArticleController::class, 'update']);
 
 Auth::routes();
 

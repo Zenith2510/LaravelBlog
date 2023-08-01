@@ -23,10 +23,18 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
-        // $this->registerPolicies();
-        // Gate::define('comment-delete', function ($user, $comment) {
-        //     return $user->id == $comment->user_id;
-        // });
+
+        Gate::define('delete-article', function ($user, $article) {
+            return $user->id == $article->user->id;
+        });
+
+        Gate::define('edit-article', function ($user, $article) {
+            return $user->id == $article->user->id;
+        });
+
+        Gate::define('delete-comment', function ($user, $comment) {
+            return $user->id == $comment->user_id
+                or         $user->id == $comment->article->user_id;
+        });
     }
 }

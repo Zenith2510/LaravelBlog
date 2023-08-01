@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         }
 
         User::factory()->create([
-            "name" => "joe",
-            "email" => "joe@gmail.com",
+            "name" => "Alice",
+            "email" => "alice@gmail.com",
         ]);
         User::factory()->create([
             "name" => "Bob",

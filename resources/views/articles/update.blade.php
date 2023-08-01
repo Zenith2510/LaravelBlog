@@ -11,15 +11,16 @@
             </div>
         @endif
 
-        <form method="post">
+        <form action="{{url("articles/update/$article->id")}}" method="post">
             @csrf
             <div class="mb-2">
+            <input type="hidden" name="article_id" value="{{$article->id}}">
                 <label for="">Title</label>
-                <input type="text" class="form-control" name="title">
+                <input type="text" class="form-control" name="title" value="{{$article->title}}">
             </div>
             <div class="mb-2">
                 <label for="">Body</label>
-                <textarea name="body" class="form-control"></textarea>
+                <textarea name="body" class="form-control">{{$article->body}}</textarea>
             </div>
             <div class="mb-3">
                 <label for="">Category</label>

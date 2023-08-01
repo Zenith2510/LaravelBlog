@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use Illuminate\Auth\Access\Gate;
+// use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
@@ -31,26 +31,26 @@ class CommentController extends Controller
     }
 
 
-    public function delete($id)
-    {
-        $comment = Comment::find($id);
-        if ($comment->user_id == auth()->user()->id) {
-            $comment->delete();
-            return back();
-        } else {
-            return back()->with('error', 'Unauthorize');
-        }
-    }
-
     // public function delete($id)
     // {
     //     $comment = Comment::find($id);
-    //     if (Gate::allows('comment-delete', auth()->user()->id, $comment)) {
+    //     if ($comment->user_id == auth()->user()->id) {
     //         $comment->delete();
+    //         return back();
     //     } else {
     //         return back()->with('error', 'Unauthorize');
     //     }
     // }
+
+    public function delete($id)
+    {
+        $comment = Comment::find($id);
+        if (Gate::allows('delete-comment', $comment)) {
+            $comment->delete();
+            return back()->with('info', 'Comment Deleted');
+        }
+        return back()->with('info', 'Unauthorize to delete');
+    }
 
 
 

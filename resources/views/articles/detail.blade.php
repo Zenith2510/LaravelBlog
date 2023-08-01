@@ -2,12 +2,19 @@
 
 @section("content")
     <div class="container" style="max-width: 800px">
+        @if(session('info'))
+            <div class="alert alert-info">
+                {{ session('info') }}
+            </div>
+        @endif
         <div class="card mb-2 border-primary" style="font-size: 1.3em">
             <div class="card-body">
                 <h3 class="card-title">{{ $article->title }}</h3>
                 <div style="font-size: 0.8em" class="text-muted">
-                    {{ $article->created_at->diffForHumans() }}
+                    <b class="text-success"> {{$article->user->name}} </b>
                      Category: <b>{{ $article->category->name }}</b>
+                    {{ $article->created_at->diffForHumans() }}
+
                 </div>
                 <div>
                     {{ $article->body }}
@@ -15,10 +22,17 @@
                 <div class="mt-2">
 
                     @auth
-                        <a href="{{ url("/articles/delete/$article->id") }}"
-                        class="btn btn-danger btn-sm">
-                        Delete
-                    </a>
+                        @can('delete-article', $article)
+                            <a href="{{ url("/articles/delete/$article->id") }}"
+                            class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+                        @endcan
+
+                        @can('edit-article',$article)
+                            <a href="{{url("/articles/update/$article->id")}}"
+                            class="btn btn-primary  btn-sm">Edit</a>
+                        @endcan
                     @endauth
                 </div>
             </div>
@@ -29,10 +43,14 @@
             </li>
             @foreach ($article->comments as $comment)
                 <li class="list-group-item">
-                    <a href="{{url("comments/delete/$comment->id")}}" class="btn-close float-end" ></a>
+                    @auth
+                        @can('delete-comment',$comment)
+                            <a href="{{url("/comments/delete/$comment->id")}}" class="btn-close float-end" ></a>
+                        @endcan
+                    @endauth
                     {{$comment->content}}
                     <div class="small mt-2">
-                    By <b>{{ $comment->user->name }}</b>,
+                    <b class="text-success">{{ $comment->user->name }}</b>,
                     {{ $comment->created_at->diffForHumans() }}
                     </div>
                 </li>
