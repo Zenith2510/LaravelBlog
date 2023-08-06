@@ -81,6 +81,17 @@ class ArticleController extends Controller
     }
     public function update($id)
     {
+        $validator = validator(request()->all(), [
+            "title" => "required",
+            "body" => "required",
+            "category_id" => "required",
+
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
         $article = Article::find($id);
         $title = request()->title;
         $body = request()->body;
@@ -91,6 +102,6 @@ class ArticleController extends Controller
         $article->category_id = $category_id;
         $article->user_id = $user_id;
         $article->save();
-        return redirect('/articles');
+        return redirect('/articles')->with('info', 'An article updated');
     }
 }

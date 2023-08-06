@@ -12,7 +12,13 @@ class CategoryApiController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
      */
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
     public function index()
     {
         return Category::all();
